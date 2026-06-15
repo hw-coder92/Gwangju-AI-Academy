@@ -25,7 +25,7 @@ print(arr) # ['3.14''안녕''2''4''3']
 print(type(arr))
 
 arr = np.array([3.14,3,2,4,3])
-print(arr) # ['3.14''안녕''2''4''3']
+print(arr) # [3.14 3.   2.   4.   3. ]
 print(type(arr))
 
 # 넘파이에서는 데이터 타입을 지정해 줄 수 있음
