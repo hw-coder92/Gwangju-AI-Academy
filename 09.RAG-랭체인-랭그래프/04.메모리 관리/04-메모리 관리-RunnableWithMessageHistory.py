@@ -125,9 +125,32 @@ for message in store["abc"].messages:
 # 8. 두 번째 사용자
 ####################################################
 
-chat("abc","안녕하세요")
-chat("abc","제 이름은 철수 입니다.")
-chat("abc","제 이름은 뭐였죠")
+chat("kim", "제 이름이 뭐죠?")
+chat("kim", "제 이름은 영희입니다.")
+chat("kim", "제 이름이 뭐였죠?")
+
+####################################################
+# 9. 첫 번째 사용자 다시
+####################################################
+
+chat("abc", "제 이름이 뭐였죠?")
+####################################################
+# 10. Memory 확인
+####################################################
+
+print("\n")
+print("=" * 60)
+print("ABC Memory")
+print("=" * 60)
 
 for message in store["abc"].messages:
+    print(message)
+
+print("\n")
+
+print("=" * 60)
+print("KIM Memory")
+print("=" * 60)
+
+for message in store["kim"].messages:
     print(message)
