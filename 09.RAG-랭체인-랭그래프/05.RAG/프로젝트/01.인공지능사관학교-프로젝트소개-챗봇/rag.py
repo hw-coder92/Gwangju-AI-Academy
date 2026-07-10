@@ -66,20 +66,38 @@ def format_docs(docs):
         result = result + "\n\n"
     return result
 
-
-question = input("질문:")
-# 1. 관련 문서 검색
-docs = retriever.invoke(question)
-# print(docs)
-
-# 2. 문자열로 변환
-context = format_docs(docs)
-
-# 3. Chain 실행
-anwser = chain.invoke(
-    {
+def ask(question):
+    
+    # 1. 관련 문서 검색
+    docs = retriever.invoke(question)
+    
+    # 2. 문자열로 변환
+    context = format_docs(docs)
+    
+    #3. Chain 실행
+    answer = chain.invoke(
+        {
         "context":context,
-        "question":question,
-    }
-)
-print(anwser)
+        "question": question
+        }
+    )
+
+    return answer
+
+# question = input("질문:")
+# # 1. 관련 문서 검색
+# docs = retriever.invoke(question)
+# # print(docs)
+
+# # 2. 문자열로 변환
+# context = format_docs(docs)
+
+# # 3. Chain 실행
+# anwser = chain.invoke(
+#     {
+#         "context":context,
+#         "question":question,
+#     }
+# )
+# print(anwser)
+
