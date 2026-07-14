@@ -48,3 +48,104 @@ result = calculator.invoke(
     }
 )
 print(result)
+
+########################################################################
+# 4. 여러 Tool 생성
+########################################################################
+@tool
+def multiply(a:int, b:int):
+    """
+    두 숫자를 곱하는 tool
+    """
+    
+    return a * b
+
+print("Tool 이름")
+print(multiply.name) # multiply
+
+print("\nTool 설명")
+print(multiply.description) # 두 숫자를 곱하는 Tool
+
+result = multiply.invoke(
+    {
+        "a":3,
+        "b":5
+    }
+)
+print("결과",result)
+
+@tool
+def divide(a:int, b:int):
+    """
+    두 숫자를 나누는 Tool
+    """
+    return a/b
+
+print("Tool 이름")
+print(divide.name) # divide
+
+print("\nTool 설명")
+print(divide.description) # 두 숫자를 나누는 Tool
+
+result = divide.invoke(
+    {
+        "a":3,
+        "b":5
+    }
+)
+print("결과",result)
+
+########################################################################
+# 5. LLM 연결
+########################################################################
+
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+from llm_loader import init_custom_llm
+
+llm = init_custom_llm()
+
+tools = [
+    calculator,
+    multiply,
+    divide
+]
+
+for t in tools:
+    print(t.name,t.description)
+
+llm_with_tools = llm.bind_tools(tools)
+
+response = llm_with_tools.invoke("10과 20을 더해 주세요.")
+print(response.content)
+
+########################################################################
+# 6. Tool Call 확인
+########################################################################
+
+if response.tool_calls:
+    print("\nTool 호출 발생")
+    print(response.tool_calls)
+else:
+    print("Tool 사용하지 않음")
+
+# 사용자 질문
+# "10과 20을 더해줘"
+
+#         |
+#         v
+#        LLM
+#         |
+#         |
+#    Tool 필요 판단
+#         |
+#         v
+#  calculator Tool
+#         |
+#         v
+#        30
+#         |
+#         v
+#  최종 답변
