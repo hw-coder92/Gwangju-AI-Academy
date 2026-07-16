@@ -31,4 +31,29 @@ builder.add_node("counter",counter)
 
 builder.add_edge(START,"counter")
 
-builder.add_conditional_edges
+builder.add_conditional_edges(
+    "counter",
+    check_count,
+    {
+        "continue":"counter",
+        "end":END
+    }
+)
+
+graph = builder.compile()
+
+# 실행
+
+result = graph.invoke({
+    "count":0
+})
+
+print(result)
+print(result["count"])
+
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from util import show_graph
+show_graph(graph)
