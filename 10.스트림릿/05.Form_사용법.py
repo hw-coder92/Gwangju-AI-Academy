@@ -1,0 +1,30 @@
+import streamlit as st
+
+st.title("Form 예제")
+
+with st.form("폼태그"):
+    name = st.text_input("이름")
+    email = st.text_input("이메일")
+
+    #submit = st.form_submit_button("가입")
+
+import requests
+
+if submit:
+    st.success("제출완료")
+    st.write(name,email)
+
+    #st.write(st.session_state)
+
+    response = requests.post(
+        "www.naver.com/login",
+        json={
+            "name":name,
+            "email":email
+        }
+    )
+
+    if response.status_code == 200:
+        st.success("서버 전송 성공")
+    else:
+        st.error("전송실패")
